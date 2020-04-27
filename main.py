@@ -1,3 +1,5 @@
+import time
+
 from src.fraction import Fraction
 
 
@@ -27,8 +29,10 @@ def parse(number):
         number = number.split('/')
         return Fraction(int(number[0]), int(number[1]))
     elif '.' in number:
-        number = float(number).as_integer_ratio()
-        return Fraction(number[0], number[1])
+        number = number.split('.')
+        numerator = int(''.join(number))
+        denominator = 10 ** len(number[1])
+        return Fraction(numerator, denominator)
     else:
         return Fraction(int(number))
 
@@ -44,7 +48,9 @@ def main():
     assert len(xs) == len(ys)
     x = list(map(parse, xs))
     y = list(map(parse, ys))
+    st = time.time()
     coef = newton_coef(x, y)
+    print('time taken to calculate: {:.5f}ms'.format((time.time() - st) * 1000))
     print('coefficient of the newton polynomial is', ' '.join([str(c) for c in coef]))
     print('resulting polynomial is:')
     print(get_polynomial_str(coef, x))
@@ -53,8 +59,10 @@ def main():
         if r == 'q':
             break
         r = parse(r)
+        st = time.time()
         ans = evaluate(coef, x, r)
         print('value at {} is {}'.format(r, ans))
+        print('time taken to interpolate: {:.5f}ms'.format((time.time() - st) * 1000))
 
 
 if __name__ == '__main__':
