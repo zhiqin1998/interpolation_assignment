@@ -25,7 +25,7 @@ def newton_coef(x, y):
 
 
 def parse(number):
-    if number.count('/') == 1:
+    if '/' in number:
         number = number.split('/')
         return Fraction(int(number[0]), int(number[1]))
     elif '.' in number:
