@@ -38,8 +38,21 @@ def parse(number):
 
 
 def get_polynomial_str(c, x):
-    # TODO create function to get string representation of polynomial
-    pass
+    ans = []
+    for i in range(len(c)):
+        curr = str(c[i])
+        if curr == '0':
+            continue
+        for j in range(i):
+            t = str(x[j])
+            if t == '0':
+                curr += '(x)'
+            elif '-' in t:
+                curr += '(x + {})'.format(t.replace('-', ''))
+            else:
+                curr += '(x - {})'.format(t)
+        ans.append(curr)
+    return ' + '.join(ans)
 
 
 def main():
