@@ -1,5 +1,12 @@
 from src.fraction import Fraction
 
+def ceil(n):
+    res = int(float(n))
+    return res if res == float(n) or float(n) < 0 else res+1
+
+def floor(n):
+    res = int(float(n))
+    return res if res == float(n) or float(n) >= 0 else res-1
 
 def evaluate(c, x, r):
     n = len(c) - 1
@@ -80,7 +87,16 @@ def main():
         r = input('enter location to interpolate at (q to exit): ')
         if r == 'q':
             break
-        r = parse_loc(r, x)
+        if(int(float(r))<len(x)-1 and int(float(r))>=0):
+             val0 = x[floor(r)]
+             val1 = x[ceil(r)]
+             r = parse_loc(r, x)
+             r = (val0.__add__(val1)).__mul__(r.__sub__(val0))
+        else:
+            r = parse_loc(r, x)
+
+        # print(r)
+
         if r is None:
             print('invalid location')
             continue
