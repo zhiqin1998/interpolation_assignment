@@ -79,7 +79,11 @@ def main():
     assert len(xs) == len(ys)
     x = list(map(parse, xs))
     y = list(map(parse, ys))
-    coef = newton_coef(x, y)
+    try:
+        coef = newton_coef(x, y)
+    except:
+        print("Divide by zero exception")
+
     print('coefficient of the newton polynomial is', ' '.join([str(c) for c in coef]))
     print('resulting polynomial is:')
     print(get_polynomial_str(coef, x))
