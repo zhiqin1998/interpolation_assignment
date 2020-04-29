@@ -35,6 +35,19 @@ def parse(number):
         return Fraction(int(number))
 
 
+def parse_loc(number, x):
+    if '.' in number:
+        left, right = number.split('.')
+        idx = int(left)
+        frac = parse('0.{}'.format(right))
+    else:
+        idx = int(eval(number))
+        frac = parse(number) - Fraction(idx)
+    if idx < 0 or idx >= len(x) - 1:
+        return None
+    return x[idx] + (x[idx + 1] - x[idx]) * frac
+
+
 def get_polynomial_str(c, x):
     ans = []
     for i in range(len(c)):
@@ -64,10 +77,13 @@ def main():
     print('resulting polynomial is:')
     print(get_polynomial_str(coef, x))
     while True:
-        r = input('enter value to interpolate at (q to exit): ')
+        r = input('enter location to interpolate at (q to exit): ')
         if r == 'q':
             break
-        r = parse(r)
+        r = parse_loc(r, x)
+        if r is None:
+            print('invalid location')
+            continue
         ans = evaluate(coef, x, r)
         print('value at {} is {}'.format(r, ans))
 
