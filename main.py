@@ -79,11 +79,7 @@ def main():
     assert len(xs) == len(ys)
     x = list(map(parse, xs))
     y = list(map(parse, ys))
-    try:
-        coef = newton_coef(x, y)
-    except:
-        print("Divide by zero exception")
-
+    coef = newton_coef(x, y)
     print('coefficient of the newton polynomial is', ' '.join([str(c) for c in coef]))
     print('resulting polynomial is:')
     print(get_polynomial_str(coef, x))
@@ -91,13 +87,13 @@ def main():
         r = input('enter location to interpolate at (q to exit): ')
         if r == 'q':
             break
-        if(int(float(r))<len(x)-1 and int(float(r))>=0):
-             val0 = x[floor(r)]
-             val1 = x[ceil(r)]
-             r = parse_loc(r, x)
-             r = (val0.__add__(val1)).__mul__(r.__sub__(val0))
-        else:
-            r = parse_loc(r, x)
+        # if(int(float(r))<len(x)-1 and int(float(r))>=0):
+        #      val0 = x[floor(r)]
+        #      val1 = x[ceil(r)]
+        #      r = parse_loc(r, x)
+        #      r = (val0.__add__(val1)).__mul__(r.__sub__(val0))
+        # else:
+        r = parse_loc(r, x)
 
         # print(r)
 
