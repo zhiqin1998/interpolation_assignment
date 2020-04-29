@@ -1,5 +1,3 @@
-import time
-
 from src.fraction import Fraction
 
 
@@ -56,14 +54,12 @@ def get_polynomial_str(c, x):
 
 
 def main():
-    xs = input('enter x values (separated by spaces): ').split()
-    ys = input('enter y values (separated by spaces): ').split()
+    xs = input('enter x values (separated by commas): ').split(',')
+    ys = input('enter y values (separated by commas): ').split(',')
     assert len(xs) == len(ys)
     x = list(map(parse, xs))
     y = list(map(parse, ys))
-    st = time.time()
     coef = newton_coef(x, y)
-    print('time taken to calculate: {:.5f}ms'.format((time.time() - st) * 1000))
     print('coefficient of the newton polynomial is', ' '.join([str(c) for c in coef]))
     print('resulting polynomial is:')
     print(get_polynomial_str(coef, x))
@@ -72,10 +68,8 @@ def main():
         if r == 'q':
             break
         r = parse(r)
-        st = time.time()
         ans = evaluate(coef, x, r)
         print('value at {} is {}'.format(r, ans))
-        print('time taken to interpolate: {:.5f}ms'.format((time.time() - st) * 1000))
 
 
 if __name__ == '__main__':
