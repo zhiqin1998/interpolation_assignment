@@ -79,30 +79,34 @@ def main():
     assert len(xs) == len(ys)
     x = list(map(parse, xs))
     y = list(map(parse, ys))
-    coef = newton_coef(x, y)
-    print('coefficient of the newton polynomial is', ' '.join([str(c) for c in coef]))
-    print('resulting polynomial is:')
-    print(get_polynomial_str(coef, x))
-    while True:
-        r = input('enter location to interpolate at (q to exit): ')
-        if r == 'q':
-            break
-        # if(int(float(r))<len(x)-1 and int(float(r))>=0):
-        #      val0 = x[floor(r)]
-        #      val1 = x[ceil(r)]
-        #      r = parse_loc(r, x)
-        #      r = (val0.__add__(val1)).__mul__(r.__sub__(val0))
-        # else:
-        r = parse_loc(r, x)
+    try:
+        coef = newton_coef(x, y)
+        print('coefficient of the newton polynomial is', ' '.join([str(c) for c in coef]))
+        print('resulting polynomial is:')
+        print(get_polynomial_str(coef, x))
 
-        # print(r)
 
-        if r is None:
-            print('invalid location')
-            continue
-        ans = evaluate(coef, x, r)
-        print('value at {} is {}'.format(r, ans))
+        while True:
+            r = input('enter location to interpolate at (q to exit): ')
+            if r == 'q':
+                break
+            # if(int(float(r))<len(x)-1 and int(float(r))>=0):
+            #      val0 = x[floor(r)]
+            #      val1 = x[ceil(r)]
+            #      r = parse_loc(r, x)
+            #      r = (val0.__add__(val1)).__mul__(r.__sub__(val0))
+            # else:
+            r = parse_loc(r, x)
 
+            # print(r)
+
+            if r is None:
+                print('invalid location')
+                continue
+            ans = evaluate(coef, x, r)
+            print('value at {} is {}'.format(r, ans))
+    except:
+        print("Divide by zero exception")
 
 if __name__ == '__main__':
     main()
