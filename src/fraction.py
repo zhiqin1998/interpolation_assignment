@@ -45,6 +45,9 @@ class Fraction:
             self.numerator = self.numerator // gcd
             self.denominator = self.denominator // gcd
 
+    def eval(self):
+        return self.numerator / self.denominator
+
     def __str__(self):
         if self.denominator == 1:
             return str(self.numerator)

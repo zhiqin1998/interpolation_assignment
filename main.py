@@ -48,14 +48,21 @@ def parse_loc(number, x):
     return x[idx] + (x[idx + 1] - x[idx]) * frac
 
 
-def get_polynomial_str(c, x):
+def get_polynomial_str(c, x, frac=True):
     ans = []
     for i in range(len(c)):
-        curr = str(c[i])
+        if frac:
+            curr = str(c[i])
+        else:
+            curr = str(c[i].eval())
         if curr == '0':
             continue
         for j in range(i):
-            t = str(x[j])
+            if frac:
+                t = str(x[j])
+            else:
+                t = str(x[j].eval())
+
             if t == '0':
                 curr += '(x)'
             elif '-' in t:
@@ -73,11 +80,13 @@ def main():
     x = list(map(parse, xs))
     y = list(map(parse, ys))
     coef = newton_coef(x, y)
-    print('coefficient of the newton polynomial is', ' '.join([str(c) for c in coef]))
+    print('\ncoefficient of the newton polynomial is', ' '.join([str(c) for c in coef]))
     print('resulting polynomial is:')
     print(get_polynomial_str(coef, x))
+    print('resulting polynomial (in decimal) is:')
+    print(get_polynomial_str(coef, x, frac=False))
     while True:
-        r = input('enter location to interpolate at (q to exit): ')
+        r = input('\nenter location to interpolate at (q to exit): ')
         if r == 'q':
             break
         r = parse_loc(r, x)
@@ -86,6 +95,7 @@ def main():
             continue
         ans = evaluate(coef, x, r)
         print('value at {} is {}'.format(r, ans))
+        print('value at {} is {}'.format(r.eval(), ans.eval()))
 
 
 if __name__ == '__main__':
